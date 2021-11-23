@@ -88,7 +88,7 @@ void mainMenu()
 void startScreen()
 {
 	cout << "========================================= \n";
-	cout << "====== Days of the Week - Week 7 \n";
+	cout << "====== Shapes - Week 8 \n";
 	cout << "====== Dean Fry, November 2021 \n";
 	cout << "========================================= \n";
 	cout << "\n ====== Welcome Player 1 ======\n";
