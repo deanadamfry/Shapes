@@ -5,6 +5,7 @@
 
 // Libraries
 #include <iostream>
+#include <string>
 using namespace std;
 
 // =======================================================
@@ -22,12 +23,10 @@ public:
 	float m_Radius = 0;
 
 	float getArea() {
-		float circleArea = pi * (m_Radius * m_Radius);
-		return circleArea;
+		return pi * (m_Radius * m_Radius);
 	}
 	float getCircumference() {
-		float circleCircumference = 2 * pi * m_Radius;
-		return circleCircumference;
+		return 2 * pi * m_Radius;
 	}
 };
 
@@ -36,29 +35,30 @@ public:
 	float m_SideLength = 0;
 
 	float getArea() {
-		float squareArea = m_SideLength * m_SideLength;
-		return squareArea;
+		return m_SideLength * m_SideLength;
 	}
 	float getPerimeter() {
-		float squarePerimeter = 4 * m_SideLength;
-		return squarePerimeter;
+		return 4 * m_SideLength;
 	}
 };
 
 class Character {
 public:
 	float m_HP = 100;           // Health Points
-	float m_SPD = 1;            // Speed
-	float m_STA = 1;            // Stamina
-	float m_STR = 1;            // Strength
+	float m_SPD = 10;           // Speed
+	float m_STA = 10;           // Stamina
+	float m_STR = 10;           // Strength
 	int m_XP = 0;               // Experience Points
-	string m_Name = "Hero";     // Name of Character
-	string m_Weapon = "Sword";  // Character Weapon
+	string m_Name = "Stranger"; // Name of Character
+	string m_Weapon = "None";   // Character Weapon
 	bool m_Armed = true;        // Character Armed?
 	bool m_IsAlive = true;      // Character Alive?
 
 	void checkIsAlive() {
-		// Workshop does not use this function
+		if (m_HP < 1)
+		{
+			m_IsAlive = false;
+		}
 	}
 };
 
@@ -119,6 +119,10 @@ void mainMenu()
 	{
 	case 1:
 	{
+		// Clear Screen
+		system("cls");
+
+		// Shapes Menu
 		cout << "\n\n ====== Shapes ====== \n\n";
 		cout << " Please Select a Program to run: \n";
 		cout << " 1: Circle \n";
@@ -208,20 +212,55 @@ void mainMenu()
 		break;
 	case 2:
 	{
-		Character pc, npc_Steve, npc_Jessica, npc_Keith; // Character Objects
+		// Clear Screen
+		system("cls");
 
-		// Player Character Stats
+		// Random Number Seed Generator
+		srand(static_cast<unsigned int>(time(0)));
+
+		// Character Objects
+		Character pc, npcs[3];
+
+		// Prompt Player for PC name
+		cout << "\n Please enter your Character's name: ";
+		cout << "\n : ";
+		cin >> pc.m_Name;
+
+		// Prompt Player for PC weapon
+		cout << "\n Please enter your Character's weapon: ";
+		cout << "\n : ";
+		cin >> pc.m_Weapon;
+
+		// Set PC stats
 		pc.m_HP = 100;
-		pc.m_SPD = 5;
-		pc.m_STA = 5;
-		pc.m_STR = 5;
-		pc.m_XP = 0;
-		pc.m_Name = "Dean The Hero";
-		pc.m_Weapon = "Steel Longsword";
+		pc.m_SPD = 10;
+		pc.m_STA = 10;
+		pc.m_STR = 10;
 		pc.m_Armed = true;
 		pc.m_IsAlive = true;
 
-		// Display Player Character Stats
+		// Create NPCS with random stats
+		for (int i = 0; i < sizeof(npcs) / sizeof(npcs[0]); i++)
+		{
+			npcs[i].m_Name = "NPC_" + to_string(i + 1);
+			npcs[i].m_HP = rand() % 100;
+			npcs[i].m_SPD = rand() % 10 + 1;
+			npcs[i].m_STA = rand() % 10 + 1;
+			npcs[i].m_STR = rand() % 10 + 1;
+			npcs[i].m_XP = rand() % 10 + 1;
+			npcs[i].m_Armed = rand() % 2;
+			if (npcs[i].m_Armed == true)
+			{
+				npcs[i].m_Weapon = "Shortsword";
+			}
+			npcs[i].checkIsAlive();
+		}
+
+		// Clear Screen
+		system("cls");
+
+		// Display PC stats
+		cout << "\n Player Character Stats";
 		cout << "\n Name: " << pc.m_Name;
 		cout << "\n Weapon: " << pc.m_Weapon;
 		cout << "\n HP: " << pc.m_HP;
@@ -229,82 +268,48 @@ void mainMenu()
 		cout << "\n Stamina: " << pc.m_STA;
 		cout << "\n Strength: " << pc.m_STR;
 		cout << "\n XP: " << pc.m_XP;
-		cout << "\n Armed?: " << pc.m_Armed;
-		cout << "\n Alive?: " << pc.m_IsAlive;
+		if (pc.m_Armed == true)
+		{
+			cout << "\n Armed?: Yes";
+		}
+		else { cout << "\n Armed?: No"; }
+		if (pc.m_IsAlive == true)
+		{
+			cout << "\n Alive?: Yes";
+		}
+		else { cout << "\n Alive?: No"; }
 		cout << "\n";
 
-		// Non-Playable Character Steve Stats
-		npc_Steve.m_HP = 0;
-		npc_Steve.m_SPD = 1;
-		npc_Steve.m_STA = 1;
-		npc_Steve.m_STR = 1;
-		npc_Steve.m_XP = 100;
-		npc_Steve.m_Name = "Steve The Merchant";
-		npc_Steve.m_Weapon = "None";
-		npc_Steve.m_Armed = false;
-		npc_Steve.m_IsAlive = false;
-
-		// Display NPC Steve Stats
-		cout << "\n Name: " << npc_Steve.m_Name;
-		cout << "\n Weapon: " << npc_Steve.m_Weapon;
-		cout << "\n HP: " << npc_Steve.m_HP;
-		cout << "\n Speed: " << npc_Steve.m_SPD;
-		cout << "\n Stamina: " << npc_Steve.m_STA;
-		cout << "\n Strength: " << npc_Steve.m_STR;
-		cout << "\n XP: " << npc_Steve.m_XP;
-		cout << "\n Armed?: " << npc_Steve.m_Armed;
-		cout << "\n Alive?: " << npc_Steve.m_IsAlive;
-		cout << "\n";
-
-		// Non-Playable Character Jessica Stats
-		npc_Jessica.m_HP = 50;
-		npc_Jessica.m_SPD = 3;
-		npc_Jessica.m_STA = 4;
-		npc_Jessica.m_STR = 3;
-		npc_Jessica.m_XP = 50;
-		npc_Jessica.m_Name = "Jessica The Farmgirl";
-		npc_Jessica.m_Weapon = "None";
-		npc_Jessica.m_Armed = false;
-		npc_Jessica.m_IsAlive = true;
-
-		// Display NPC Jessica Stats
-		cout << "\n Name: " << npc_Jessica.m_Name;
-		cout << "\n Weapon: " << npc_Jessica.m_Weapon;
-		cout << "\n HP: " << npc_Jessica.m_HP;
-		cout << "\n Speed: " << npc_Jessica.m_SPD;
-		cout << "\n Stamina: " << npc_Jessica.m_STA;
-		cout << "\n Strength: " << npc_Jessica.m_STR;
-		cout << "\n XP: " << npc_Jessica.m_XP;
-		cout << "\n Armed?: " << npc_Jessica.m_Armed;
-		cout << "\n Alive?: " << npc_Jessica.m_IsAlive;
-		cout << "\n";
-
-		// Non-Playable Character Keith Stats
-		npc_Keith.m_HP = 0;
-		npc_Keith.m_SPD = 5;
-		npc_Keith.m_STA = 5;
-		npc_Keith.m_STR = 5;
-		npc_Keith.m_XP = 500;
-		npc_Keith.m_Name = "Keith The Thief";
-		npc_Keith.m_Weapon = "Iron Dagger";
-		npc_Keith.m_Armed = true;
-		npc_Keith.m_IsAlive = false;
-
-		// Display NPC Keith Stats
-		cout << "\n Name: " << npc_Keith.m_Name;
-		cout << "\n Weapon: " << npc_Keith.m_Weapon;
-		cout << "\n HP: " << npc_Keith.m_HP;
-		cout << "\n Speed: " << npc_Keith.m_SPD;
-		cout << "\n Stamina: " << npc_Keith.m_STA;
-		cout << "\n Strength: " << npc_Keith.m_STR;
-		cout << "\n XP: " << npc_Keith.m_XP;
-		cout << "\n Armed?: " << npc_Keith.m_Armed;
-		cout << "\n Alive?: " << npc_Keith.m_IsAlive;
-		cout << "\n";
+		// Display NPC stats
+		for (int i = 0; i < sizeof(npcs) / sizeof(npcs[0]); i++)
+		{
+			cout << "\n Current NPC Stats";
+			cout << "\n Name: " << npcs[i].m_Name;
+			cout << "\n Weapon: " << npcs[i].m_Weapon;
+			cout << "\n HP: " << npcs[i].m_HP;
+			cout << "\n Speed: " << npcs[i].m_SPD;
+			cout << "\n Stamina: " << npcs[i].m_STA;
+			cout << "\n Strength: " << npcs[i].m_STR;
+			cout << "\n XP: " << npcs[i].m_XP;
+			if (npcs[i].m_Armed == true)
+			{
+				cout << "\n Armed?: Yes";
+			}
+			else { cout << "\n Armed?: No"; }
+			if (npcs[i].m_IsAlive == true)
+			{
+				cout << "\n Alive?: Yes";
+			}
+			else { cout << "\n Alive?: No"; }
+			cout << "\n";
+		}
 	}
 		break;
 	case 3:
 	{
+		// Clear Screen
+		system("cls");
+
 		cout << "\n Option Unavailable";
 	}
 		break;
