@@ -17,8 +17,8 @@ void exitScreen();
 // =======================================================
 // Classes
 class Circle {
-private:
-	float pi = 3.141593;
+private:       
+	float pi = 3.141592653589793;
 public:
 	float m_Radius = 0;
 
@@ -49,7 +49,7 @@ public:
 	float m_STA = 10;           // Stamina
 	float m_STR = 10;           // Strength
 	int m_XP = 0;               // Experience Points
-	string m_Name = "Stranger"; // Name of Character
+	string m_Name = "Stranger"; // Character Name
 	string m_Weapon = "None";   // Character Weapon
 	bool m_Armed = true;        // Character Armed?
 	bool m_IsAlive = true;      // Character Alive?
@@ -134,7 +134,7 @@ void mainMenu()
 		cin >> playerChoice; // User Input
 
 		// Input Validation
-		while (playerChoice < 1 || playerChoice > 6)
+		while (playerChoice < 1 || playerChoice > 4)
 		{
 			if (cin.fail()) // Non-Number entered
 			{
@@ -147,26 +147,34 @@ void mainMenu()
 			cout << "\n  : ";
 			cin >> playerChoice;
 		}
-
-		Circle circleSmall, circleMedium, circleLarge; // Circle Objects
-		Square squareSmall, squareMedium, squareLarge; // Square Objects
+        
+		// Circle Objects
+		Circle circleSmall, circleMedium, circleLarge; 
+        // Square Objects
+		Square squareSmall, squareMedium, squareLarge; 
 
 		switch (playerChoice)
 		{
 		case 1:
 		{
+			// Clear Screen
+			system("cls");
+
+			// Small Circle
 			circleSmall.m_Radius = 2;
 			cout << "\n Small Circle";
 			cout << "\n Area: " << circleSmall.getArea();
 			cout << "\n Circumference: " << circleSmall.getCircumference();
 			cout << "\n";
 			
+			// Medium Circle
 			circleMedium.m_Radius = 5;
 			cout << "\n Medium Circle";
 			cout << "\n Area: " << circleMedium.getArea();
 			cout << "\n Circumference: " << circleMedium.getCircumference();
 			cout << "\n";
 
+			// Large Circle
 			circleLarge.m_Radius = 10;
 			cout << "\n Large Circle";
 			cout << "\n Area: " << circleLarge.getArea();
@@ -176,18 +184,24 @@ void mainMenu()
 		break;
 		case 2:
 		{
+			// Clear Screen
+			system("cls");
+
+			// Small Square
 			squareSmall.m_SideLength = 2;
 			cout << "\n Small Square";
 			cout << "\n Area: " << squareSmall.getArea();
 			cout << "\n Perimeter: " << squareSmall.getPerimeter();
 			cout << "\n";
 
+			// Medium Square
 			squareMedium.m_SideLength = 5;
 			cout << "\n Medium Square";
 			cout << "\n Area: " << squareMedium.getArea();
 			cout << "\n Perimeter: " << squareMedium.getPerimeter();
 			cout << "\n";
 
+			// Large Square
 			squareLarge.m_SideLength = 10;
 			cout << "\n Large Square";
 			cout << "\n Area: " << squareLarge.getArea();
